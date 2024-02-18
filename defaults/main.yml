@@ -10,3 +10,6 @@ bind9_named_conf_local: "{{bind9_config_src_dir}}/named.conf.local"
 # And the subdirectory of config files to copy over. Typically these are the
 # zone files, which would be referenced by the named.conf.local file. 
 bind9_config_subdirectory: "{{bind9_config_src_dir}}/configs"
+
+# Force bind9 to only listen on IPv4 addresses
+bind9_force_ipv4: true

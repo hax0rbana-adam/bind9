@@ -33,3 +33,26 @@
     state: directory
     owner: bind
     group: bind
+
+- name: Checking for presence of /etc/default/named
+  ansible.builtin.file:
+    path: /etc/default/named
+  when: bind9_force_ipv4
+
+- name: Checking to see if server is already forcing IPv4 or IPv6
+  ansible.builtin.lineinfile:
+    path: /etc/default/named
+    regexp: OPTIONS="(.*) -4"$
+    line: "OPTIONS=\"\\1 -4\""
+  register: force_ipv4
+  check_mode: yes
+  when: bind9_force_ipv4
+
+- name: Enabling IPv4 mode only
+  ansible.builtin.lineinfile:
+    path: /etc/default/named
+    backrefs: true
+    regexp: OPTIONS="(.*)"$
+    line: "OPTIONS=\"\\1 -4\""
+  when: bind9_force_ipv4 and force_ipv4 is changed
+  notify: Restart bind9
