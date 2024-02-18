@@ -1,0 +1,6 @@
+- name: Restart bind9
+  ansible.builtin.systemd:
+    enabled: true
+    name: bind9
+    daemon_reload: true
+    state: restarted

@@ -1,0 +1,12 @@
+# The directory where the source configuration files are stored
+bind9_config_src_dir: .
+# The location of the options config file to copy over. This contains things
+# like which networks can recurse, whether DNS sec is enabled, what IP address
+# to listen on, and so forth.
+bind9_named_conf_options: "{{bind9_config_src_dir}}/named.conf.options"
+# This typically defines the zones you're resolving locally and points to the
+# zone file for each zone
+bind9_named_conf_local: "{{bind9_config_src_dir}}/named.conf.local"
+# And the subdirectory of config files to copy over. Typically these are the
+# zone files, which would be referenced by the named.conf.local file. 
+bind9_config_subdirectory: "{{bind9_config_src_dir}}/configs"

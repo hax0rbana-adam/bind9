@@ -1,0 +1,28 @@
+# This role installs bind9 on a server and deploys your configuration files.
+# The expectation is that you have configuration files checked into revision
+# control and are pointing ansible to a checkout of those files.
+- name: Install software that is available from apt repos
+  ansible.builtin.package:
+    name: bind9
+
+- name: Setting bind service to restart on failure
+  ansible.builtin.lineinfile:
+    dest: /lib/systemd/system/named.service
+    regexp: ^Restart=.*
+    line: Restart=on-failue
+  notify: Restart bind9
+
+- name: Copying over named.conf.options
+  ansible.builtin.copy:
+    src: "{{bind9_named_conf_options}}"
+    dest: /etc/bind/named.conf.options
+
+- name: Copying over named.conf.local
+  ansible.builtin.copy:
+    src: "{{bind9_named_conf_local}}"
+    dest: /etc/bind/named.conf.local
+
+- name: Copying over subdirectory of configuration files
+  ansible.builtin.copy:
+    src: "{{bind9_config_subdirectory}}"
+    dest: /etc/bind/configs

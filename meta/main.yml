@@ -1,0 +1,19 @@
+---
+galaxy_info:
+  author: Adam
+  description: bind9 - A DNS server which can do recursive lookups
+  license: MIT
+  company: none
+  min_ansible_version: 2.7
+  platforms:
+    - name: Debian
+      versions:
+        - bullseye
+        - bookworm
+  galaxy_tags:
+    - bind
+    - bind9
+    - dns
+    - server
+
+dependencies: []
