@@ -26,3 +26,10 @@
   ansible.builtin.copy:
     src: "{{bind9_config_subdirectory}}/"
     dest: /etc/bind
+
+- name: Ensuring the /var/log/named directory exists
+  ansible.builtin.file:
+    path: /var/log/named
+    state: directory
+    owner: bind
+    group: bind
